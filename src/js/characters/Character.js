@@ -1,11 +1,9 @@
 export default class Character {
   constructor(name, type) {
-    // Валидация имени
     if (typeof name !== 'string' || name.length < 2 || name.length > 10) {
       throw new Error('Имя должно быть строкой длиной от 2 до 10 символов');
     }
 
-    // Валидация типа
     const validTypes = ['Bowman', 'Swordsman', 'Magician', 'Daemon', 'Undead', 'Zombie'];
     if (!validTypes.includes(type)) {
       throw new Error(`Тип должен быть одним из: ${validTypes.join(', ')}`);
@@ -23,7 +21,7 @@ export default class Character {
     if (this.health === 0) {
       throw new Error('Нельзя повысить левел умершего персонажа');
     }
-    
+
     this.level += 1;
     this.attack = Math.round(this.attack * 1.2);
     this.defence = Math.round(this.defence * 1.2);
@@ -34,7 +32,7 @@ export default class Character {
     if (this.health <= 0) {
       return;
     }
-    
+
     const damageTaken = points * (1 - this.defence / 100);
     this.health = Math.max(0, this.health - damageTaken);
   }

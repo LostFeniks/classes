@@ -46,10 +46,10 @@ describe('Character Class', () => {
 
     test('должен повышать уровень, атаку, защиту и восстанавливать здоровье', () => {
       character.levelUp();
-      
+
       expect(character.level).toBe(2);
-      expect(character.attack).toBe(30); // 25 * 1.2 = 30
-      expect(character.defence).toBe(30); // 25 * 1.2 = 30
+      expect(character.attack).toBe(30);
+      expect(character.defence).toBe(30);
       expect(character.health).toBe(100);
     });
 
@@ -57,14 +57,14 @@ describe('Character Class', () => {
       character.attack = 33;
       character.defence = 33;
       character.levelUp();
-      
-      expect(character.attack).toBe(40); // 33 * 1.2 = 39.6 ≈ 40
+
+      expect(character.attack).toBe(40);
       expect(character.defence).toBe(40);
     });
 
     test('должен выбрасывать ошибку при попытке повысить уровень мертвого персонажа', () => {
       character.health = 0;
-      
+
       expect(() => character.levelUp()).toThrow('Нельзя повысить левел умершего персонажа');
     });
 
@@ -73,13 +73,13 @@ describe('Character Class', () => {
       const originalLevel = character.level;
       const originalAttack = character.attack;
       const originalDefence = character.defence;
-      
+
       try {
         character.levelUp();
       } catch (error) {
         // Ожидаем ошибку
       }
-      
+
       expect(character.level).toBe(originalLevel);
       expect(character.attack).toBe(originalAttack);
       expect(character.defence).toBe(originalDefence);
@@ -97,7 +97,6 @@ describe('Character Class', () => {
     });
 
     test('должен правильно рассчитывать урон с учетом защиты', () => {
-      // Урон = 50 * (1 - 25/100) = 50 * 0.75 = 37.5
       character.damage(50);
       expect(character.health).toBe(62.5);
     });
@@ -123,7 +122,7 @@ describe('Character Class', () => {
     test('защита 100% должна полностью блокировать урон', () => {
       character.defence = 100;
       character.damage(100);
-      expect(character.health).toBe(100); // Урон = 100 * (1 - 1) = 0
+      expect(character.health).toBe(100);
     });
 
     test('защита 0% не должна уменьшать урон', () => {
@@ -135,7 +134,6 @@ describe('Character Class', () => {
     test('должен корректно работать с дробными значениями урона', () => {
       character.defence = 30;
       character.damage(33.3);
-      // Урон = 33.3 * (1 - 0.3) = 33.3 * 0.7 = 23.31
       expect(character.health).toBe(76.69);
     });
   });
@@ -156,7 +154,7 @@ describe('Дочерние классы', () => {
     test('должен корректно повышать уровень', () => {
       const bowman = new Bowerman('Legolas');
       bowman.levelUp();
-      
+
       expect(bowman.level).toBe(2);
       expect(bowman.attack).toBe(30);
       expect(bowman.defence).toBe(30);
@@ -166,7 +164,6 @@ describe('Дочерние классы', () => {
     test('должен корректно получать урон', () => {
       const bowman = new Bowerman('Legolas');
       bowman.damage(50);
-      // Урон = 50 * (1 - 25/100) = 37.5
       expect(bowman.health).toBe(62.5);
     });
   });
@@ -183,16 +180,15 @@ describe('Дочерние классы', () => {
     test('должен корректно повышать уровень', () => {
       const swordsman = new Swordsman('Aragorn');
       swordsman.levelUp();
-      
+
       expect(swordsman.level).toBe(2);
-      expect(swordsman.attack).toBe(48); // 40 * 1.2 = 48
-      expect(swordsman.defence).toBe(12); // 10 * 1.2 = 12
+      expect(swordsman.attack).toBe(48);
+      expect(swordsman.defence).toBe(12);
     });
 
     test('должен корректно получать урон', () => {
       const swordsman = new Swordsman('Aragorn');
       swordsman.damage(50);
-      // Урон = 50 * (1 - 10/100) = 45
       expect(swordsman.health).toBe(55);
     });
   });
@@ -209,16 +205,15 @@ describe('Дочерние классы', () => {
     test('должен корректно повышать уровень', () => {
       const magician = new Magician('Gandalf');
       magician.levelUp();
-      
+
       expect(magician.level).toBe(2);
-      expect(magician.attack).toBe(12); // 10 * 1.2 = 12
-      expect(magician.defence).toBe(48); // 40 * 1.2 = 48
+      expect(magician.attack).toBe(12);
+      expect(magician.defence).toBe(48);
     });
 
     test('должен корректно получать урон', () => {
       const magician = new Magician('Gandalf');
       magician.damage(50);
-      // Урон = 50 * (1 - 40/100) = 30
       expect(magician.health).toBe(70);
     });
   });
@@ -235,7 +230,7 @@ describe('Дочерние классы', () => {
     test('должен корректно повышать уровень', () => {
       const daemon = new Daemon('Azazel');
       daemon.levelUp();
-      
+
       expect(daemon.level).toBe(2);
       expect(daemon.attack).toBe(12);
       expect(daemon.defence).toBe(48);
@@ -267,8 +262,8 @@ describe('Интеграционные тесты', () => {
   test('персонаж может получить урон и затем повысить уровень', () => {
     const bowman = new Bowerman('Legolas');
     bowman.damage(30);
-    expect(bowman.health).toBe(77.5); // 30 * 0.75 = 22.5 урона
-    
+    expect(bowman.health).toBe(77.5);
+
     bowman.levelUp();
     expect(bowman.level).toBe(2);
     expect(bowman.attack).toBe(30);
@@ -278,9 +273,9 @@ describe('Интеграционные тесты', () => {
 
   test('персонаж не может повысить уровень после смерти', () => {
     const swordsman = new Swordsman('Aragorn');
-    swordsman.damage(200); // Убиваем персонажа
+    swordsman.damage(200);
     expect(swordsman.health).toBe(0);
-    
+
     expect(() => swordsman.levelUp()).toThrow('Нельзя повысить левел умершего персонажа');
   });
 
@@ -289,8 +284,7 @@ describe('Интеграционные тесты', () => {
     magician.damage(20);
     magician.damage(30);
     magician.damage(25);
-    
-    // Суммарный урон: 20*0.6 + 30*0.6 + 25*0.6 = 75*0.6 = 45
+
     expect(magician.health).toBe(55);
   });
 
@@ -298,7 +292,6 @@ describe('Интеграционные тесты', () => {
     const character = new Character('Hero', 'Bowman');
     character.defence = 33;
     character.damage(100);
-    // Урон = 100 * (1 - 0.33) = 67
     expect(character.health).toBe(33);
   });
 });

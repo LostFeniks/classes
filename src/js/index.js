@@ -23,7 +23,7 @@ console.log(`Здоровье: ${bowman.health}`);
 
 console.log('\n=== Попытка повысить уровень мертвого персонажа ===');
 const deadCharacter = new Swordsman('Мертвый');
-deadCharacter.damage(1000); // Убиваем
+deadCharacter.damage(1000);
 console.log(`Здоровье: ${deadCharacter.health}`);
 
 try {
@@ -39,18 +39,18 @@ const characters = [
   new Magician('Гэндальф'),
   new Daemon('Азазель'),
   new Undead('Лич'),
-  new Zombie('Ходячий')
+  new Zombie('Ходячий'),
 ];
 
 // Применяем урон к каждому
-characters.forEach(char => {
-  char.damage(30);
+characters.forEach((character) => {
+  character.damage(30);
 });
 
 // Повышаем уровень всем живым
-characters.forEach(char => {
-  if (char.health > 0) {
-    char.levelUp();
+characters.forEach((character) => {
+  if (character.health > 0) {
+    character.levelUp();
   }
 });
 
@@ -60,14 +60,14 @@ if (app) {
   app.innerHTML = `
     <h1>Персонажи после боя и повышения уровня</h1>
     <div style="display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
-      ${characters.map(char => `
-        <div style="border: 1px solid #ccc; border-radius: 8px; padding: 15px; background: ${char.health > 0 ? '#e8f5e9' : '#ffebee'}">
-          <h3>${char.name} (${char.type})</h3>
-          <p><strong>❤️ Здоровье:</strong> ${char.health > 0 ? char.health.toFixed(1) : char.health}</p>
-          <p><strong>⭐ Уровень:</strong> ${char.level}</p>
-          <p><strong>⚔️ Атака:</strong> ${char.attack}</p>
-          <p><strong>🛡️ Защита:</strong> ${char.defence}</p>
-          ${char.health === 0 ? '<p style="color: red;">💀 Мертв</p>' : ''}
+      ${characters.map((character) => `
+        <div style="border: 1px solid #ccc; border-radius: 8px; padding: 15px; background: ${character.health > 0 ? '#e8f5e9' : '#ffebee'}">
+          <h3>${character.name} (${character.type})</h3>
+          <p><strong>❤️ Здоровье:</strong> ${character.health > 0 ? character.health.toFixed(1) : character.health}</p>
+          <p><strong>⭐ Уровень:</strong> ${character.level}</p>
+          <p><strong>⚔️ Атака:</strong> ${character.attack}</p>
+          <p><strong>🛡️ Защита:</strong> ${character.defence}</p>
+          ${character.health === 0 ? '<p style="color: red;">💀 Мертв</p>' : ''}
         </div>
       `).join('')}
     </div>
